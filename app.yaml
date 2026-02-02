@@ -1,0 +1,50 @@
+runtime: python311
+
+# Configuração para Cloud Run
+env: flex
+
+# Recursos para Cloud Run
+resources:
+  cpu: 1
+  memory_gb: 1
+  disk_size_gb: 10
+
+# Auto-scaling
+automatic_scaling:
+  min_num_instances: 0
+  max_num_instances: 10
+  cpu_utilization:
+    target_utilization: 0.65
+
+# Variáveis de ambiente
+env_variables:
+  PORT: 8080
+  PYTHONPATH: "/app"
+
+# Health check
+readiness_check:
+  path: "/_stcore/health"
+  check_interval_sec: 30
+  timeout_sec: 10
+  failure_threshold: 3
+  success_threshold: 2
+
+liveness_check:
+  path: "/_stcore/health"
+  check_interval_sec: 60
+  timeout_sec: 10
+  failure_threshold: 3
+  success_threshold: 2
+
+# Configurações de rede
+network:
+  session_affinity: true
+
+# Tempo de execução máximo
+instance_class: F1
+
+# Handlers para arquivos estáticos (se necessário)
+handlers:
+- url: /_stcore/.*
+  script: auto
+  secure: always
