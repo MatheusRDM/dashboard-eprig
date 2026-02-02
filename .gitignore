@@ -5,9 +5,10 @@ __pycache__/
 venv/
 env/
 
-# Excel / Dados temporários
+# Excel e Arquivos Temporários
 ~$*
 *.tmp
+*.temp
 .cache/
 
 # Sistema
